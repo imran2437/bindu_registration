@@ -52,8 +52,7 @@
     </record>
 
     <!-- Parent menu for Bindu Registration -->
-    <menuitem id="menu_bindu_registration_root" name="Bindu Registration" sequence="10"/>
-
+    <menuitem id="menu_bindu_registration_root" name="Bindu Registration"  web_icon="bindu_registration,static/description/icon.png" sequence="10"/>
     <!-- Submenu for managing registrations -->
     <menuitem id="menu_bindu_registration_main" name="Registrations" parent="menu_bindu_registration_root" action="action_bindu_registration" sequence="1"/>
 </odoo>

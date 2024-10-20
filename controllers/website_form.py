@@ -32,3 +32,31 @@ class BinduRegistrationController(http.Controller):
         return request.render('bindu_registration.web_bindu_registration', {
             'registrations': registrations,
         })
+        
+class BinduRegistrationController(http.Controller):
+
+        @http.route('/download/ticket/<int:registration_id>', type='http', auth='public', website=True)
+        def download_ticket(self, registration_id, **kwargs):
+            # Retrieve the registration record
+            registration = request.env['bindu.registration'].sudo().browse(registration_id)
+            if not registration.exists():
+                return request.not_found()
+
+            # Generate the PDF report
+            report_action = request.env['ir.actions.report'].sudo()._get_report_from_name('bindu_registration.action_report_bindu_registration')
+            
+            # Check if the report exists
+            if not report_action:
+                return request.not_found()
+
+            # Render the PDF
+            pdf_data = report_action._render_qweb_pdf([registration.id])[0]
+
+            # Prepare the response
+            response = request.make_response(pdf_data,
+                headers=[
+                    ('Content-Type', 'application/pdf'),
+                    ('Content-Disposition', 'attachment; filename="ticket_{}.pdf"'.format(registration_id))
+                ]
+            )
+            return response

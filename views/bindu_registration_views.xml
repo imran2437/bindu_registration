@@ -1,0 +1,59 @@
+<odoo>
+    <!-- Form View for Bindu Registration -->
+    <record id="view_bindu_registration_form" model="ir.ui.view">
+        <field name="name">bindu.registration.form</field>
+        <field name="model">bindu.registration</field>
+        <field name="arch" type="xml">
+            <form string="Bindu Registration">
+                <header>
+                    <button name="action_payment_confirm" type="object" string="Confirm Payment" class="btn btn-success" icon="fa-check" invisible="state != 'draft'"/>
+                    <button name="action_transaction_validated" type="object" string="Validate Transaction" class="btn btn-primary" icon="fa-check-circle" invisible="state != 'payment_confirm'"/>
+                    <!-- <button name="action_create_invoice" type="object" string="Create Invoice" class="btn btn-info" icon="fa-file-invoice" invisible="state in ('paid', 'validated')"/> -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,paid,payment_confirm,validated"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="phone"/>
+                        <field name="transaction_id"/>
+                        <field name="email"/>
+                        <field name="partner_id" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View for Bindu Registration -->
+    <record id="view_bindu_registration_tree" model="ir.ui.view">
+        <field name="name">bindu.registration.tree</field>
+        <field name="model">bindu.registration</field>
+        <field name="arch" type="xml">
+            <tree string="Bindu Registrations">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="transaction_id"/>
+                <field name="email"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action for Bindu Registration List View -->
+    <record id="action_bindu_registration" model="ir.actions.act_window">
+        <field name="name">Bindu Registrations</field>
+        <field name="res_model">bindu.registration</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No registrations yet.
+            </p>
+        </field>
+    </record>
+
+    <!-- Parent menu for Bindu Registration -->
+    <menuitem id="menu_bindu_registration_root" name="Bindu Registration" sequence="10"/>
+
+    <!-- Submenu for managing registrations -->
+    <menuitem id="menu_bindu_registration_main" name="Registrations" parent="menu_bindu_registration_root" action="action_bindu_registration" sequence="1"/>
+</odoo>

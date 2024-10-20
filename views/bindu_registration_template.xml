@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Bindu Registration Form -->
+    <template id="bindu_registration_form" name="Bindu Registration Form">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h3>Register for Bindu Get Together</h3>
+                <form action="/bindu/registration/submit" method="POST">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-control" required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" id="phone" name="phone" class="form-control" required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction_id">Transaction ID</label>
+                        <input type="text" id="transaction_id" name="transaction_id" class="form-control" required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" t-att-value="user_email" readonly="readonly"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <!-- web Registration Status -->
+    <template id="web_bindu_registration" name="Bindu Registration Status">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h3>Your Registrations</h3>
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Registration ID</th>
+                                <th>Transaction ID</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="registrations.sudo()" t-as="registration">
+                                <tr>
+                                    <td><t t-esc="registration.name"/></td>
+                                    <td><t t-esc="registration.transaction_id"/></td>
+                                    <td><t t-esc="registration.state"/></td>
+                                    <td>
+                                        <t t-if="registration.state == 'validated'">
+                                            <a t-attf-href="/report/pdf/bindu_registration.report_bindu_registration_template/#{registration.sudo().id}" target="_blank" class="btn btn-sm btn-success">
+                                                <i class="fa fa-download"></i> Download Report
+                                            </a>
+                                        </t>
+                                        <t t-else="">
+                                            <span class="text-muted">Pending Validation</span>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div t-if="not registrations">
+                    <p>You have no registrations yet.</p>
+                </div> -->
+            </div>
+        </t>
+    </template>
+
+    <!-- Thank You Page -->
+    <template id="thank_you" name="Thank You Page">
+        <t t-call="website.layout">
+            <div class="container mt-5 text-center">
+                <h3>Thank you for registering!</h3>
+                <p>Your registration has been received. We will contact you soon.</p>
+            </div>
+        </t>
+    </template>
+    <!-- registration status and website report menu -->
+    <record id="menu_web_bindu_registration1" model="website.menu">
+        <field name="name">Registration Status</field>
+        <field name="url">/my/registrations</field> 
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">61</field>
+    </record>
+    <!-- Website menu for Bindu Registration -->
+    <record id="menu_bindu_registration_website" model="website.menu">
+        <field name="name">Bindu Registration</field>
+        <field name="url">/bindu/registration</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">60</field>
+    </record>
+
+    
+</odoo>

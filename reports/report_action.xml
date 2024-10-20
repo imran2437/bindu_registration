@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data><!-- Report Action -->
+        <record id="action_report_bindu_registration" model="ir.actions.report">
+            <field name="name">Bindu Registration</field>
+            <field name="model">bindu.registration</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bindu_registration.report_bindu_registration_template</field>
+            <field name="report_file">bindu_registration.report_bindu_registration_template</field>
+            <field name="binding_model_id" ref="model_bindu_registration"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="model_bindu_registration_access" model="ir.model.access">
+            <field name="name">bindu.registration access</field>
+            <field name="model_id" ref="model_bindu_registration"/>
+            <field name="group_id" ref="base.group_public"/> <!-- Public Group -->
+            <field name="perm_read" eval="1"/> <!-- Allow Read Access -->
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+    </data>
+</odoo>

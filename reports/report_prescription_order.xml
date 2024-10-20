@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_bindu_registration_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="font-family: Arial, sans-serif; margin: 20px; display: flex; flex-direction: column; min-height: 100vh;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 2px solid black; padding-bottom: 10px;">
+                        <div style="width: 50%;">
+                            <h3 style="margin: 0;">Bindu Get Together Registration</h3>
+                            <p style="margin: 0;"><strong>Name:</strong> <t t-esc="doc.name"/></p>
+                            <p style="margin: 0;"><strong>Phone:</strong> <t t-esc="doc.phone"/></p>
+                            <p style="margin: 0;"><strong>Email:</strong> <t t-esc="doc.email"/></p>
+                            <p style="margin: 0;"><strong>Transaction ID:</strong> <t t-esc="doc.transaction_id"/></p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="margin: 0;"><strong>Status:</strong> <t t-esc="doc.state"/></p>
+                        </div>
+                    </div>
+
+                    <!-- Section for Invoice -->
+                    <div style="margin-top: 20px;">
+                        <h4>Invoice Details</h4>
+                        <p><strong>Partner:</strong> <t t-esc="doc.partner_id.name"/></p>
+                        <p><strong>Invoice Status:</strong> <t t-esc="doc.state == 'paid' and 'Paid' or 'Pending'"/></p>
+                    </div>
+
+                    <!-- Signature or footer section -->
+                    <footer style="margin-top: auto;">
+                        <p style="text-align: right;">Thank you for registering!</p>
+                    </footer>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
